@@ -5,7 +5,7 @@ import 'package:getx/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main()  async{
-  await registerServices;
+  await registerServices();
   runApp(const MyApp());
 }
 
