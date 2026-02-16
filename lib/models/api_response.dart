@@ -64,33 +64,60 @@ class Crypto {
     required this.ath,
     required this.atl,
   });
+  static double _parseToDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
+  }
+
 
   factory Crypto.fromJson(Map<String, dynamic> json) {
     return Crypto(
-      id: json['id'],
-      key: json['key'],
-      symbol: json['symbol'],
-      name: json['name'],
-      type: json['type'],
-      rank: json['rank'],
-      categoryId: json['categoryId'],
-      lastUpdated: json['lastUpdated'],
-      totalSupply: (json['totalSupply'] ?? 0).toDouble(),
-      maxSupply: (json['maxSupply'] ?? 0).toDouble(),
-      circulatingSupply: (json['circulatingSupply'] ?? 0).toDouble(),
-      volume24hBase: (json['volume24hBase'] ?? 0).toDouble(),
-      images: Images.fromJson(json['images']),
-      price: (json['price'] ?? 0).toDouble(),
-      high24h: (json['high24h'] ?? 0).toDouble(),
-      low24h: (json['low24h'] ?? 0).toDouble(),
-      volume24h: (json['volume24h'] ?? 0).toDouble(),
-      marketCap: (json['marketCap'] ?? 0).toDouble(),
-      fullyDilutedValuation: (json['fullyDilutedValuation'] ?? 0).toDouble(),
-      createdAt: json['createdAt'],
-      ath: AthAth.fromJson(json['ath']),
-      atl: AthAth.fromJson(json['atl']),
+      id: json['id'] ?? 0,
+      key: json['key'] ?? '',
+      symbol: json['symbol'] ?? '',
+      name: json['name'] ?? '',
+      type: json['type'] ?? '',
+      rank: json['rank'] ?? 0,
+      categoryId: json['categoryId'] ?? 0,
+      lastUpdated: json['lastUpdated'] ?? 0,
+
+      totalSupply: _parseToDouble(json['totalSupply']),
+      maxSupply: _parseToDouble(json['maxSupply']),
+      circulatingSupply: _parseToDouble(json['circulatingSupply']),
+      volume24hBase: _parseToDouble(json['volume24hBase']),
+
+      images: json['images'] != null
+          ? Images.fromJson(json['images'])
+          : Images(
+        x60: '',
+        x150: '',
+        icon: '',
+        nativeImage: '',
+      ),
+
+      price: _parseToDouble(json['price']),
+      high24h: _parseToDouble(json['high24h']),
+      low24h: _parseToDouble(json['low24h']),
+      volume24h: _parseToDouble(json['volume24h']),
+      marketCap: _parseToDouble(json['marketCap']),
+      fullyDilutedValuation:
+      _parseToDouble(json['fullyDilutedValuation']),
+
+      createdAt: json['createdAt'] ?? 0,
+
+      ath: json['ath'] != null
+          ? AthAth.fromJson(json['ath'])
+          : AthAth(date: 0, value: 0.0, percentChange: 0.0),
+
+      atl: json['atl'] != null
+          ? AthAth.fromJson(json['atl'])
+          : AthAth(date: 0, value: 0.0, percentChange: 0.0),
     );
   }
+
 
   Map<String, dynamic> toJson() => {
     "id": id,
@@ -159,11 +186,21 @@ class AthAth {
     required this.percentChange,
   });
 
+
+  static double _parseToDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
+  }
+
   factory AthAth.fromJson(Map<String, dynamic> json) {
     return AthAth(
       date: json['date'],
-      value: (json['value'] ?? 0).toDouble(),
-      percentChange: (json['percentChange'] ?? 0).toDouble(),
+      value: _parseToDouble(json['value']),
+      percentChange: _parseToDouble(json['percentChange']),
+
     );
   }
 
