@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx/controller/assets_controller.dart';
 import 'package:getx/models/api_response.dart';
 import 'package:getx/services/http_service.dart';
 
@@ -9,7 +10,7 @@ class AddAssetDialogController extends GetxController{
   RxBool loading = false.obs;
   RxList<String> assets = <String>[].obs;
   RxString selectedAsset = "".obs;
-
+  RxDouble assetValue = 0.0.obs;
 
   @override
   void onInit() {
@@ -105,12 +106,39 @@ class AddAssetDialog extends StatelessWidget {
                 }
               }),
               TextField(
-                onChanged: (value) {},
+                onChanged: (value) {
+                  if (value != null) {
+                    controller.assetValue.value = double.parse(value);
+                  }
+                },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder()
                 ),
-              )
+              ),
+
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary
+              ),
+              child: InkWell(
+                onTap: () {
+                  AssetsController assetsController = Get.find();
+                  assetsController.addTrackedAsset(
+                      controller.selectedAsset.value,
+                      controller.assetValue.value);
+                  
+                  Get.back(closeOverlays: true);
+                },
+                child: Text(
+                    "Add Asset",
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       );

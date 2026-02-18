@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:getx/controller/assets_controller.dart';
 import 'package:getx/pages/home.dart';
 import 'package:getx/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main()  async{
   await registerServices();
+  await registerController();
   runApp(const MyApp());
 }
 

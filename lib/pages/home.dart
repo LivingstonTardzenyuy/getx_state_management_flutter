@@ -8,7 +8,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _appBar(context)
+        appBar: _appBar(context),
+      body: Center(
+        child: Text("Ended in 00:53"),
+      )
+
     );
   }
 
