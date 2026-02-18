@@ -8,7 +8,7 @@ import 'package:getx/services/http_service.dart';
 class AddAssetDialogController extends GetxController{
   RxBool loading = false.obs;
   RxList<String> assets = <String>[].obs;
-  RxList<dynamic> selectedAsset = [].obs;
+  RxString selectedAsset = "".obs;
 
 
   @override
@@ -33,6 +33,8 @@ class AddAssetDialogController extends GetxController{
           );
         });
         print("the assets are: ${assets} ");
+        selectedAsset.value = assets.first;
+
         // selectedAsset.value = assets.first;
         loading.value = false;
 
@@ -65,14 +67,14 @@ class AddAssetDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.white
             ),
-            child: _buildUI(),
+            child: _buildUI(context),
           ),
         ),
       )
     );
   }
 
-  Widget _buildUI() {
+  Widget _buildUI(BuildContext context) {
     if (controller.loading.isTrue) {
       return const Center(
         child: SizedBox(
@@ -81,13 +83,36 @@ class AddAssetDialog extends StatelessWidget {
         ),
       );
     } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Text("This is the loading state"),
-          )
-        ],
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            DropdownButton(
+              value: controller.selectedAsset.value,
+              items: controller.assets.map((asset) {
+                return DropdownMenuItem<String>(
+                    value: asset,
+                    child: Text(
+                      asset,
+                    ));
+                }).toList(),
+              onChanged: (newValue) {
+                if (newValue != null) {
+                  controller.selectedAsset.value = newValue;
+                }
+              }),
+              TextField(
+                onChanged: (value) {},
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder()
+                ),
+              )
+          ],
+        ),
       );
     }
   }
