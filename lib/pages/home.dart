@@ -1,18 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx/controller/assets_controller.dart';
 import 'package:getx/widgets/add_dialog.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  AssetsController assetsController = Get.find();
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _appBar(context),
-      body: Center(
-        child: Text("Ended in 00:53"),
-      )
+      body: _buildUI(context)
 
+    );
+  }
+
+
+  Widget _buildUI(BuildContext context) {
+    return SafeArea(
+        child: Obx (
+            () => Column(
+              children: [
+                _portfolioValue(context),
+              ],
+            )
+        )
+    );
+  }
+
+  Widget _portfolioValue(BuildContext context) {
+    return Container(
+      width: MediaQuery.sizeOf(context).width,
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.sizeOf(context).height * 0.03,
+      ),
+      child: Center(
+        child: Text.rich(
+          TextSpan(
+            children: [
+              const TextSpan(
+                text: "\$",
+                style: TextStyle(
+                  fontSize: 15, fontWeight: FontWeight.w500
+                )
+              )
+            ]
+          )
+        ),
+      ),
     );
   }
 
