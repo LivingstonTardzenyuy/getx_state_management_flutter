@@ -16,5 +16,6 @@ class AssetsController extends GetxController{
       name: name,
       amount: amount,
     ));
+    print("The printed asset is ${trackedAssets}");
   }
 }
