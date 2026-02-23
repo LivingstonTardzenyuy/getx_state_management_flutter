@@ -21,7 +21,7 @@ class AssetsController extends GetxController{
     HttpService httpService = Get.find();
     var responseData = await httpService.get("currencies");
     CurrenciesListAPIResponse currenciesListAPIResponse = CurrenciesListAPIResponse.fromJson(responseData);
-    coinData.value = currenciesListAPIResponse.data ?? [];
+    coinData.value = currenciesListAPIResponse.data ;
     loading.value = false;
 
   }
@@ -42,12 +42,18 @@ class AssetsController extends GetxController{
     }
     double value = 0;
     for (TrackedAsset asset in trackedAssets) {
-      value+ = asset *
+      value += (getAssetPrice(asset.name!)! * asset.amount!)!;
     }
-
+    return value;
   }
 
   double? getAssetPrice(String name){
-    Crypto? data = Cryp
+    Crypto? data = getCoinData(name);
+    return data!.price.toDouble() ?? 0;
+    // return data!.values?.uSD?.price?.toDouble() ?? 0;
+  }
+
+  Crypto? getCoinData(String name) {
+    return coinData.firstWhereOrNull((element) => element.name == name);
   }
 }

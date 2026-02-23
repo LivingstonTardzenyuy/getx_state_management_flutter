@@ -35,19 +35,41 @@ class HomePage extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         vertical: MediaQuery.sizeOf(context).height * 0.03,
       ),
-      child: Center(
-        child: Text.rich(
-          TextSpan(
-            children: [
-              const TextSpan(
-                text: "\$",
-                style: TextStyle(
-                  fontSize: 15, fontWeight: FontWeight.w500
-                )
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Center(
+          //   child:
+          // ),
+          Text.rich(
+              TextSpan(
+                  children: [
+                    const TextSpan(
+                        text: "\$",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w500
+                        )
+                    ),
+
+                    TextSpan(
+                      text: "${assetsController.getPortfolioValue().toStringAsFixed(2)}\n",
+                      style: TextStyle(
+                          fontSize: 40, fontWeight: FontWeight.w700
+                      ),
+                    ),
+
+                    const TextSpan(
+                        text: "Portfolio value",
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w200
+                        )
+                    )
+                  ]
               )
-            ]
-          )
-        ),
+          ),
+        ],
       ),
     );
   }
